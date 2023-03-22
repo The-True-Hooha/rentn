@@ -6,3 +6,63 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Agent {
+  agentId String @id @default(uuid())
+  firstName String
+  lastName String
+  phoneNumber String[] @unique
+  email String @unique
+  password String
+  createdAt DateTime @default(now())
+  apartment Apartment[]
+  verified Boolean @default(false)
+
+  @@index([agentId])
+  @@unique([phoneNumber, email, agentId])
+}
+
+model Price {
+  priceId String @id @default(uuid())
+  createdAt DateTime @default(now())
+  rent Decimal @default(0.00)
+  tenure Int @default(1)
+  updatedAt DateTime @updatedAt
+  apartment   Apartment @relation(fields: [apartmentId, apartmentType], references: [apartmentId, appartmentType], onUpdate: Cascade)
+  apartmentId String @unique
+  apartmentType String
+
+  @@index([priceId])
+  @@unique([apartmentId, apartmentType])
+}
+model Apartment {
+  apartmentId String @id @default(uuid())
+  description String @db.VarChar(5000)
+  address String @db.VarChar(200)
+  localty String @db.VarChar(200)
+  createdAt DateTime @default(now())
+  appartmentType String
+  contact Agent @relation(fields: [agentNumber, agenEmail, agentId], references: [phoneNumber, email, agentId], onDelete: Cascade)
+  agenEmail String
+  agentId String
+  agentNumber String
+  updatedAt DateTime @updatedAt
+  price Price[]
+  image String?
+
+
+  @@index([apartmentId])
+  @@unique([apartmentId, appartmentType])
+}
+
+model Admin {
+  adminId String @id @default(uuid())
+  firstName String
+  lastName String
+  password String
+  phoneNumber String @unique
+  email String @unique
+  verified Boolean @default(false)
+  homeAddress String
+  @@index([adminId])
+}
