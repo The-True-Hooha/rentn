@@ -7,15 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model Agent {
   agentId String @id @default(uuid())
-  firstName String
-  lastName String
-  phoneNumber String @unique
-  email String @unique
-  password String
+  firstName String @db.VarChar(10)
+  lastName String @db.VarChar(10)
+  phoneNumber String @unique @db.VarChar(11)
+  email String @unique @db.VarChar(15)
+  role ROLE @default(Agent)
+  password String @db.VarChar(16)
   createdAt DateTime @default(now())
-  apartment Apartment[]
+  apartment Apartment?
   verified Boolean @default(false)
 
   @@index([agentId])
@@ -25,21 +27,21 @@ model Agent {
 model Price {
   priceId String @id @default(uuid())
   createdAt DateTime @default(now())
-  rent Decimal @default(0.00)
+  price Decimal @default(0.00) @db.Decimal(10,2)
   tenure Int @default(1)
   updatedAt DateTime @updatedAt
   apartment   Apartment @relation(fields: [apartmentId, apartmentType], references: [apartmentId, appartmentType], onUpdate: Cascade)
   apartmentId String @unique
   apartmentType String
-
   @@index([priceId])
   @@unique([apartmentId, apartmentType])
 }
+
 model Apartment {
   apartmentId String @id @default(uuid())
   description String @db.VarChar(5000)
   address String @db.VarChar(200)
-  localArea String @db.VarChar(50)
+  community String @db.VarChar(50)
   createdAt DateTime @default(now())
   appartmentType String
   contact Agent @relation(fields: [agentNumber, agentEmail, agentId], references: [phoneNumber, email, agentId], onDelete: Cascade)
@@ -47,12 +49,11 @@ model Apartment {
   agentEmail String
   agentId String
   updatedAt DateTime @updatedAt
-  price Price[]
-  image String?
-
-
+  price Price? // working with this for not required yet, if it fails I'll change it to required or a better solution
+  images String[]
   @@index([apartmentId])
   @@unique([apartmentId, appartmentType])
+  @@unique([agentNumber, agentEmail, agentId])
 }
 
 model Admin {
@@ -61,9 +62,23 @@ model Admin {
   lastName String
   password String
   phoneNumber String @unique
+  role ROLE @default(Admin)
   email String @unique
   verified Boolean @default(false)
   homeAddress String
 
   @@index([adminId])
+}
+enum ROLE {
+  Agent
+  User
+  Admin
+}
+
+model User {
+  userId String @id @default(uuid())
+  email String
+  name String
+  role ROLE @default(User)
+  createdAt DateTime @default(now())
 }
