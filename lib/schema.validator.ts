@@ -25,7 +25,14 @@ export function agentSchemaValidation(data: {}){
             .trim(),
         password: zod
             .string()
-            .min(8, 'password must not be lower than 6')
+            .min(8, { message: 'Password must be at least 8 characters long' })
+            .regex(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+              {
+                message:
+                  'Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol',
+              },
+            )
             .max(16, 'password is too long')
             .nonempty('password must be set by the user')
             .trim(),
@@ -53,7 +60,14 @@ export function userSchemaValidation(data: {}){
             .trim(),
         password: zod
             .string()
-            .min(8, 'password must not be lower than 6')
+            .min(8, { message: 'Password must be at least 8 characters long' })
+            .regex(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+              {
+                message:
+                  'Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol',
+              },
+            )
             .max(16, 'password is too long')
             .nonempty('password must be set by the user')
             .trim(),
@@ -76,11 +90,18 @@ export function adminSchemaValidation(data: {}){
         lastName: zod
             .string()
             .nonempty('last name must not be empty')
-            .max(8, "first name is too long")
+            .max(8, {message: 'first name is too long'})
             .trim(),
         password: zod
             .string()
-            .min(8, 'password must not be lower than 6')
+            .min(8, { message: 'Password must be at least 8 characters long' })
+            .regex(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+              {
+                message:
+                  'Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol',
+              },
+            )
             .max(16, 'password is too long')
             .nonempty('password must be set by the user')
             .trim(),
