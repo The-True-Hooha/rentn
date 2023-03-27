@@ -14,7 +14,7 @@ model Agent {
   phoneNumber String @unique @db.VarChar(11)
   email String @unique 
   role ROLE @default(Agent)
-  password String @db.VarChar(16)
+  password String
   createdAt DateTime @default(now())
   apartment Apartment?
   verified Boolean @default(false)
