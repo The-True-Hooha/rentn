@@ -4,10 +4,11 @@ import { isAgentAvailable } from "lib/check.db";
 import { agentSchemaValidation } from "lib/schema.validator";
 import { CreateAgentDto } from "dto/agent.dto.interface";
 import { ApiResponseDto } from "dto/apiResponseDto";
+import hashPassword from "lib/hash.password.helper";
 
 
 export default async function handler(
-    req:NextApiRequest, 
+    req: NextApiRequest, 
     res: NextApiResponse
 ) {
     // checks and validates the error that is sent in the req body
@@ -27,7 +28,7 @@ export default async function handler(
                     lastName: newAgent.lastName,
                     phoneNumber: newAgent.phoneNumber,
                     email: newAgent.email,
-                    password: newAgent.password,
+                    password: await hashPassword(newAgent.password),
                 },
             })
             const response: ApiResponseDto<CreateAgentDto> = {
