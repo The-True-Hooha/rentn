@@ -7,13 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Agent {
   agentId String @id @default(uuid())
-  firstName String @db.VarChar(10)
-  lastName String @db.VarChar(10)
+  firstName String 
+  lastName String 
   phoneNumber String @unique @db.VarChar(11)
-  email String @unique @db.VarChar(15)
+  email String @unique 
   role ROLE @default(Agent)
   password String @db.VarChar(16)
   createdAt DateTime @default(now())
@@ -60,7 +59,7 @@ model Admin {
   adminId String @id @default(uuid())
   firstName String
   lastName String
-  password String
+  password String @db.VarChar(16)
   phoneNumber String @unique
   role ROLE @default(Admin)
   email String @unique
@@ -69,6 +68,7 @@ model Admin {
 
   @@index([adminId])
 }
+
 enum ROLE {
   Agent
   User
@@ -77,8 +77,11 @@ enum ROLE {
 
 model User {
   userId String @id @default(uuid())
-  email String
+  phoneNumber String @unique
+  email String @unique
+  password String @db.VarChar(16)
   name String
   role ROLE @default(User)
+  verified Boolean @default(false)
   createdAt DateTime @default(now())
 }
