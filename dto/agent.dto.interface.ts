@@ -6,6 +6,11 @@ export interface CreateAgentDto {
     password: string;
 }
 
+export interface AgentLoginDto {
+    email: string;
+    password: string;
+}
+
 export interface UpdateAgentDto {
     firstName?: string;
     lastName?: string;
