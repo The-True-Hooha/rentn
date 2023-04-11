@@ -14,7 +14,11 @@ export default async function handler(
     // checks and validates the error that is sent in the req body
     const validationError = agentSchemaValidation(req.body)
     if(validationError){
-        return res.status(400).send(validationError)
+        return res.status(400).send({
+            message: 'there is an error with your signup details',
+            error: validationError,
+            date: new Date(),
+        })
     }
 
     // proceeds to get the new details sent
@@ -38,15 +42,15 @@ export default async function handler(
                 url: req.url,
                 date: new Date(), // if data does not appears to be in sync with the local timezone, you have to match it to fix
             }
-            res.status(201).json(response)
+            res.status(201).send(response)
         } else{
-            res.status(400).json({
-                message: 'agent with this data is already exist'
+            res.status(400).send({
+                message: 'agent with this data already exist'
             })
         }
     } catch(error: any) {
         console.log('agent signup error::', error)
-        return res.status(500).json({
+        return res.status(500).send({
             message: 'sever is currently unavailable',
             data: error.message
         })

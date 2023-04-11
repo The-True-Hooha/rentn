@@ -38,7 +38,49 @@ export function agentSchemaValidation(data: {}){
     }
 }
 
-export function userSchemaValidation(data: {}){
+export function userValidationSchema(data: any) {
+    const userLoginSchema = zod.object({
+        email: zod
+            .string()
+            .nonempty({message: 'email is required to login'})
+            .email()
+            .trim(),
+        password: zod
+            .string()
+            .min(1, "Password must be 8 or more characters")
+            .max(16, "Password is too long")
+            .nonempty({message: 'password is required to login'})
+            .trim(),
+    })
+    try {
+        userLoginSchema.parse(data)
+    } catch (err: any) {
+        return fromZodError(err).message
+    }
+}
+
+export function agentLoginSchema(data: any) {
+    const agentLoginValidator = zod.object({
+        email: zod
+            .string()
+            .nonempty({message: 'email is required to login'})
+            .email()
+            .trim(),
+        password: zod
+            .string()
+            .min(1, "Password must be 8 or more characters")
+            .max(16, "Password is too long")
+            .nonempty({message: 'password is required to login'})
+            .trim(),
+    })
+    try {
+        agentLoginValidator.parse(data)
+    } catch (err: any) {
+        return fromZodError(err).message
+    }
+}
+
+export function userSchemaValidation(data: any){
     const userSignUpValidation = zod.object({
         email: zod
             .string()
@@ -178,3 +220,5 @@ export function priceSchemaValidation(data: {}){
 
 
 // https://stackoverflow.com/questions/75285218/is-there-a-way-to-use-zod-to-validate-that-a-number-has-up-to-2-decimal-digits
+
+// todo: find better regex for password
