@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt';
 import { serialize } from "cookie";
 import { createAccessToken } from "lib/auth.token";
 
-export async function handler (
+export default async function handler (
     req: NextApiRequest,
     res: NextApiResponse
 ){

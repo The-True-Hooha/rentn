@@ -16,7 +16,7 @@ export default async function handler (
         return res.status(400).send({
             message: 'there is an error with your login details',
             error: agentLoginError,
-            data: new Date(),
+            date: new Date(),
         })
     }
 
@@ -25,7 +25,7 @@ export default async function handler (
     try {
         const agent = await prisma.agent.findUnique({
             where: {
-                email: agentLogin.email
+                email: agentLogin.email // check to lower case
             }
         });
         if(!agent){
@@ -48,9 +48,10 @@ export default async function handler (
                     sameSite: "strict",
                     maxAge: 60 * 60 * 24 * 3, //expires in 3 days
                     path: '/',
+                    secure: process.env.NODE_ENV !== "development",
                 }
             )
-            res.setHeader('rentn-cookie', setCookie)
+            res.setHeader('rentn', setCookie)
             return res.status(200).send({
                 message: 'login successful',
                 date: new Date(),

@@ -6,7 +6,7 @@ import { CreateUserDto } from "dto/user.dto.interface";
 import hashPassword from "lib/hash.password.helper";
 import { ApiResponseDto } from 'dto/apiResponseDto';
 
-export async function handler(
+export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse,
 ) {

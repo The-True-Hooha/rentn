@@ -1,4 +1,6 @@
+import { Agent } from "@prisma/client";
 import { prisma } from "config/prisma.connect";
+
 
 export async function isAgentAvailable(
   email: string, 
@@ -63,3 +65,16 @@ export async function isUserAvailable(email: string): Promise<boolean>{
 
 // look for way to get rid of multiple apartment in the same community and address and number
 
+
+export async function getAllAgents(email: string): Promise<Agent[]> {
+  const agent = await prisma.agent.findMany({
+    where: {
+      email: email
+    }, 
+    orderBy: {
+      createdAt: "asc"
+    }
+  })
+
+  return agent
+}
