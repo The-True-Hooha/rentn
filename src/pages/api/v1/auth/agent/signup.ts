@@ -21,6 +21,11 @@ export default async function handler(
         })
     }
 
+    // TODO: validate email address and fix regex pattern for email and password
+    // TODO: email to be sent to agent/user after signup (react email) so that verification can change to true
+    
+
+
     // proceeds to get the new details sent
     const newAgent: CreateAgentDto = req.body;
 
