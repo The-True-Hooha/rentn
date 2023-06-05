@@ -117,3 +117,5 @@ export async function addNewApartment(
 
   return !apartment
 }
+
+// TODO: create schema for profile of user and agent
