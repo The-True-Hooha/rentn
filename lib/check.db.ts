@@ -2,6 +2,8 @@ import { Agent, User } from "@prisma/client";
 import { prisma } from "config/prisma.connect";
 
 
+// TODO: setup CI/CD for the project after done with apartment upload
+
 export async function isAgentAvailable(
   email: string, 
   phoneNumber: string
@@ -93,6 +95,22 @@ export async function getAllUsers(email: string):Promise<User[]> {
   
 }
 
-export async function addNewApartment(){
-  
+export async function addNewApartment(
+  address: string,
+  community: string
+): Promise<boolean>{
+  const apartment = await prisma.apartment.findFirst({
+    where: {
+      OR: [
+        {address: address},
+        {community: community}
+      ],
+    },
+    select: {
+      address: true,
+      community: true,
+    }
+  });
+
+  return !apartment
 }
