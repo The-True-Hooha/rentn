@@ -164,6 +164,7 @@ export function adminSchemaValidation(data: {}){
     }
 }
 
+// TODO: custom check for photo duplicates with hashes and check if it's already stored in the database
 export function apartmentSchemaValidation(data: {}){
     const apartmentValidation = zod.object({
         description: zod
@@ -189,7 +190,11 @@ export function apartmentSchemaValidation(data: {}){
         images: zod
             .string()
             .optional()
-            .array(), //added array to the schema validation, if it does not work I'll remove it
+            .array(),
+        price: zod
+            .number()
+            .nonnegative('please add a valid number'),
+            //added array to the schema validation, if it does not work I'll remove it
     })
     try{
         apartmentValidation.parse(data)
