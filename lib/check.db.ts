@@ -111,6 +111,9 @@ export async function addNewApartment(
       community: true,
     }
   });
+  if (apartment){
+    throw new Error('an apartment with that address or community already exits')
+  }
 
   return !apartment
 }
