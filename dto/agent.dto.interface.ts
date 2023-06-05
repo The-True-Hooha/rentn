@@ -22,3 +22,13 @@ export interface UpdateAgentDto {
     email?: string;
     password?: string;
 }
+
+export interface ApartmentDto {
+    address: 'string';
+    community: string;
+    apartmentType: string;
+    price: any;
+    description: string;
+    contact: any;
+    images?: string;
+}
