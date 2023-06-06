@@ -2,71 +2,83 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// TODO: update all the prisma clients
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model Agent {
-  agentId String @id @default(uuid())
-  firstName String 
-  lastName String 
-  phoneNumber String @unique @db.VarChar(11)
-  email String @unique 
-  role ROLE @default(Agent)
-  password String
-  createdAt DateTime @default(now())
-  apartment Apartment?
-  verified Boolean @default(false)
+model Rentn {
+  rentnId   String   @id @default(uuid())
+  email     String   @unique
+  status    Status   @default(NOT_VERIFIED)
+  password  String
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  profile   Profile? @relation(fields: [rentnId], references: [profileId])
 
-  @@index([agentId])
-  @@unique([phoneNumber, email, agentId])
+  @@index([rentnId, email])
+}
+
+model Profile {
+  profileId     String        @id @default(uuid())
+  firstName     String
+  lastName      String
+  phoneNumber   String
+  rentn         Rentn?
+  address       String
+  gender        GENDER
+  role          ROLE
+  status        Status
+  createdAt     DateTime      @default(now()) @db.Timestamptz()
+  updatedAt     DateTime      @updatedAt @db.Timestamptz()
+  profileStatus ProfileStatus @default(ACTIVE)
+  Apartment     Apartment[]
+
+  @@index([profileId])
+}
+
+enum GENDER {
+  Male
+  Female
+}
+
+enum Status {
+  NOT_VERIFIED
+  VERIFIED
 }
 
 model Price {
-  priceId String @id @default(uuid())
-  createdAt DateTime @default(now())
-  price Decimal @default(0.00) @db.Decimal(10,2)
-  tenure Int @default(1)
-  updatedAt DateTime @updatedAt
-  apartment   Apartment @relation(fields: [apartmentId, apartmentType], references: [apartmentId, appartmentType], onUpdate: Cascade)
-  apartmentId String @unique
+  priceId       String    @id @default(uuid())
+  createdAt     DateTime  @default(now()) @db.Timestamptz()
+  price         Decimal   @default(0.00) @db.Decimal(10, 2)
+  tenure        Int       @default(1)
+  updatedAt     DateTime  @updatedAt @db.Timestamptz()
+  apartment     Apartment @relation(fields: [apartmentId, apartmentType], references: [apartmentId, apartmentType], onUpdate: Cascade)
+  apartmentId   String    @unique
   apartmentType String
-  @@index([priceId])
+
+
   @@unique([apartmentId, apartmentType])
+  @@index([priceId])
 }
 
 model Apartment {
-  apartmentId String @id @default(uuid())
-  description String @db.VarChar(5000)
-  address String @db.VarChar(200)
-  community String @db.VarChar(50)
-  createdAt DateTime @default(now())
-  appartmentType String
-  contact Agent @relation(fields: [agentNumber, agentEmail, agentId], references: [phoneNumber, email, agentId], onDelete: Cascade)
-  agentNumber String
-  agentEmail String
-  agentId String
-  updatedAt DateTime @updatedAt
-  price Price? // working with this for not required yet, if it fails I'll change it to required or a better solution
-  images String[]
+  apartmentId   String   @id @default(uuid())
+  name          String   @db.VarChar(50)
+  description   String   @db.VarChar(5000)
+  address       String   @db.VarChar(200)
+  community     String   @db.VarChar(50)
+  createdAt     DateTime @default(now()) @db.Timestamptz()
+  apartmentType String
+  features      String[]
+  updatedAt     DateTime @updatedAt @db.Timestamptz()
+  price         Price? // working with this for not required yet, if it fails I'll change it to required or a better solution
+  images        String[]
+  profile       Profile  @relation(fields: [profileId], references: [profileId])
+  profileId     String
+
+  @@unique([apartmentId, apartmentType])
   @@index([apartmentId])
-  @@unique([apartmentId, appartmentType])
-  @@unique([agentNumber, agentEmail, agentId])
-}
-
-model Admin {
-  adminId String @id @default(uuid())
-  firstName String
-  lastName String
-  password String @db.VarChar(16)
-  phoneNumber String @unique
-  role ROLE @default(Admin)
-  email String @unique
-  verified Boolean @default(false)
-  homeAddress String
-
-  @@index([adminId])
 }
 
 enum ROLE {
@@ -75,13 +87,13 @@ enum ROLE {
   Admin
 }
 
-model User {
-  userId String @id @default(uuid())
-  phoneNumber String @unique
-  email String @unique
-  password String @db.VarChar(16)
-  name String
-  role ROLE @default(User)
-  verified Boolean @default(false)
-  createdAt DateTime @default(now())
+enum ProfileStatus {
+  SUSPENDED // suspended, facing judgement for faults
+  SCAMMER // reported for scam related issue, could possibly lead to being disabled
+  ACTIVE // current active user on the rentn platform
+  INACTIVE // user who has been inactive for the last 30 days or more
+  DISABLED // a user who request that his/her profile be deleted
 }
+
+
+// run migration with npx prisma migrate dev --name init
