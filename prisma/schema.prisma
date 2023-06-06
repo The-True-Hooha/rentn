@@ -3,6 +3,7 @@ generator client {
 }
 
 // TODO: re-write schema to fit business model
+// TODO: update all the prisma clients
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -13,7 +14,7 @@ model Rentn {
   email     String   @unique
   status    Status   @default(NOT_VERIFIED)
   password  String
-  createdAt DateTime @default(now())
+  createdAt DateTime @default(now()) @db.Timestamptz()
   profile   Profile? @relation(fields: [rentnId], references: [profileId])
 
   @@index([rentnId])
@@ -29,8 +30,8 @@ model Profile {
   gender        GENDER
   role          ROLE
   status        Status
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  createdAt     DateTime      @default(now()) @db.Timestamptz()
+  updatedAt     DateTime      @updatedAt @db.Timestamptz()
   profileStatus ProfileStatus @default(ACTIVE)
   Apartment     Apartment[]
 
@@ -49,13 +50,14 @@ enum Status {
 
 model Price {
   priceId       String    @id @default(uuid())
-  createdAt     DateTime  @default(now())
+  createdAt     DateTime  @default(now()) @db.Timestamptz()
   price         Decimal   @default(0.00) @db.Decimal(10, 2)
   tenure        Int       @default(1)
-  updatedAt     DateTime  @updatedAt
+  updatedAt     DateTime  @updatedAt @db.Timestamptz()
   apartment     Apartment @relation(fields: [apartmentId, apartmentType], references: [apartmentId, apartmentType], onUpdate: Cascade)
   apartmentId   String    @unique
   apartmentType String
+
 
   @@unique([apartmentId, apartmentType])
   @@index([priceId])
@@ -67,10 +69,10 @@ model Apartment {
   description   String   @db.VarChar(5000)
   address       String   @db.VarChar(200)
   community     String   @db.VarChar(50)
-  createdAt     DateTime @default(now())
+  createdAt     DateTime @default(now()) @db.Timestamptz()
   apartmentType String
   features      String[]
-  updatedAt     DateTime @updatedAt
+  updatedAt     DateTime @updatedAt @db.Timestamptz()
   price         Price? // working with this for not required yet, if it fails I'll change it to required or a better solution
   images        String[]
   profile       Profile  @relation(fields: [profileId], references: [profileId])
