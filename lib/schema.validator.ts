@@ -226,4 +226,32 @@ export function priceSchemaValidation(data: {}){
 
 // https://stackoverflow.com/questions/75285218/is-there-a-way-to-use-zod-to-validate-that-a-number-has-up-to-2-decimal-digits
 
-// todo: find better regex for password
+// TODO: fix eslint for lints
+
+
+export function rentnSchemaValidator(data: {}) {
+    
+    const signUpValidation = zod.object({
+        email: zod
+            .string()
+            .nonempty('email field must not be empty')
+            .email('please input a valid email address')
+            // .refine((value) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value), 'please use a valid email address')
+            .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'please use a valid email address'),
+        
+        password: zod
+            .string()
+            .min(8, { message: 'Password must be at least 8 characters long' })
+            .max(16, 'password is too long')
+            .nonempty('password must be set by the user')
+            .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/, 'password must contain uppercase, lowercase, digit, and special character')
+            .trim(),
+    })
+
+    try {
+        signUpValidation.parse(data)
+    } catch (error: any) {
+        console.log('sign up validation error:: ', error)
+        return fromZodError(error).message
+    }
+}
