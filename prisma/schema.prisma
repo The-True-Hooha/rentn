@@ -2,7 +2,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// TODO: update all the prisma clients
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -15,6 +14,8 @@ model Rentn {
   password  String
   createdAt DateTime @default(now()) @db.Timestamptz()
   profile   Profile? @relation(fields: [rentnId], references: [profileId])
+  otp       String
+  secret    String
 
   @@index([rentnId, email])
 }
@@ -57,7 +58,6 @@ model Price {
   apartmentId   String    @unique
   apartmentType String
 
-
   @@unique([apartmentId, apartmentType])
   @@index([priceId])
 }
@@ -94,6 +94,5 @@ enum ProfileStatus {
   INACTIVE // user who has been inactive for the last 30 days or more
   DISABLED // a user who request that his/her profile be deleted
 }
-
 
 // run migration with npx prisma migrate dev --name init
