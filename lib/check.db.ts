@@ -24,8 +24,8 @@ export async function findRentn(email: string): Promise<any> {
       select: {
         email: true
       },
-    });
-
+    })
+    
     const result = !findRentn
     cache.set(key, result)
     return result;
@@ -56,5 +56,3 @@ export async function addNewApartment(
 
   return !apartment
 }
-
-// TODO: create schema for profile of user and agent

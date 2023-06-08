@@ -3,3 +3,8 @@ export interface RentnDto {
     password: string;
 }
 
+export interface VerifyOtpDto {
+    email: string;
+    otp: string;
+}
+
