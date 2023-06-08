@@ -24,10 +24,8 @@ export async function findRentn(email: string): Promise<any> {
       select: {
         email: true
       },
-    });
-
+    })
     
-
     const result = !findRentn
     cache.set(key, result)
     return result;
