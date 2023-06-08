@@ -38,6 +38,7 @@ export default async function handler (
                     otp: await hashString(otp),
                 }
             })
+
             // send email here
             const emailContent = RentnSignUpEmail({
                 rentnOtp: otp,
@@ -67,6 +68,11 @@ export default async function handler (
         }
 
     } catch (error: any) {
+        if (error.code == 'P2002' && error.meta?.target?.includes('email')) {
+            return res.status(404).json({
+                message: 'oops, this email already exist',
+            })
+        }
         console.log('agent signup error::', error)
         return res.status(500).send({
             message: 'sever is currently unavailable',

@@ -19,7 +19,8 @@ import {
     rentnOtp?: string;
   }
   
-  const baseUrl = process.env.LOGO_LINK
+  const baseUrl = "https://drive.google.com/file/d/1Q7vFwb4RHnVvRevjB6iQCTAYMpnJHRWP/view?usp=sharing";
+  process.env.LOGO_LINK
 
   
   export const RentnSignUpEmail = ({
@@ -36,7 +37,7 @@ import {
               src={`${baseUrl}/static/slack-logo.png`}
               width="120"
               height="36"
-              alt="Slack"
+              alt="Rentn"
             />
           </Section>
           <Heading style={h1}>Confirm your email address</Heading>
@@ -63,7 +64,7 @@ import {
                   src={baseUrl}
                   width="120"
                   height="36"
-                  alt="Slack"
+                  alt="Rentn"
                 />
               </Column>
               <Column>
@@ -74,7 +75,7 @@ import {
                         src={baseUrl}
                         width="32"
                         height="32"
-                        alt="Slack"
+                        alt="Rentn"
                         style={socialMediaIcon}
                       />
                     </Link>
@@ -85,7 +86,7 @@ import {
                         src={baseUrl}
                         width="32"
                         height="32"
-                        alt="Slack"
+                        alt="Rentn"
                         style={socialMediaIcon}
                       />
                     </Link>
@@ -96,7 +97,7 @@ import {
                         src={baseUrl}
                         width="32"
                         height="32"
-                        alt="Slack"
+                        alt="Rentn"
                         style={socialMediaIcon}
                       />
                     </Link>
