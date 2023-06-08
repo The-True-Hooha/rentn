@@ -24,7 +24,6 @@ export default async function handler (
     }
 
     const {otp, secret} = await OtpGenerator();
-
     
     const newUser: RentnDto = req.body;
     const resend = new Resend(process.env.RESEND_RENTN_API_KEY)
@@ -34,8 +33,8 @@ export default async function handler (
                 data: {
                     email: newUser.email,
                     password: await hashString(newUser.password),
-                    secret: await hashString(secret),
-                    otp: await hashString(otp),
+                    secret: secret,
+                    otp: otp,
                 }
             })
 
@@ -45,12 +44,12 @@ export default async function handler (
                 email: newUser.email
             });
 
-            await resend.sendEmail({
-                from: 'onboarding@resend.dev',
-                to: newUser.email,
-                subject: 'Rentn Email Confirmation',
-                react: emailContent,
-            });
+            // await resend.sendEmail({
+            //     from: 'onboarding@resend.dev',
+            //     to: newUser.email,
+            //     subject: 'Rentn Email Confirmation',
+            //     react: emailContent,
+            // });
 
             const response:ApiResponseDto<RentnDto> = {
                 statusCode: 201,
@@ -61,6 +60,7 @@ export default async function handler (
             };
             
             res.status(201).send(response)
+            // res.redirect('/verify') redirect users to the otp verification route
         } else {
             res.status(400).send({
                 message: 'user with this email already exist'

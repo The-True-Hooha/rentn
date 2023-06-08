@@ -255,3 +255,29 @@ export function rentnSchemaValidator(data: {}) {
         return fromZodError(error).message
     }
 }
+
+export function OtpZodError(data: {}) {
+    const otpError = zod.object({
+        email: zod
+            .string()
+            .nonempty('email field must not be empty')
+            .email('please input a valid email address')
+            // .refine((value) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value), 'please use a valid email address')
+            .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'please use a valid email address'),
+        
+        otp: zod
+            .string()
+            .nonempty('otp must not be empty')
+            .min(6, 'otp must not be less than six')
+            .max(6, 'otp must not be greater six')
+    })
+
+    try {
+        otpError.parse(data)
+    } catch (error: any) {
+        console.log('otp verification error', error)
+        return fromZodError(error)?.message
+
+    }
+
+}
