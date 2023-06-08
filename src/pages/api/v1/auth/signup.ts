@@ -63,7 +63,7 @@ export default async function handler (
             res.status(201).send(response)
         } else {
             res.status(400).send({
-                message: 'this email already exist'
+                message: 'user with this email already exist'
             })
         }
 

@@ -19,8 +19,7 @@ import {
     rentnOtp?: string;
   }
   
-  const baseUrl = "https://drive.google.com/file/d/1Q7vFwb4RHnVvRevjB6iQCTAYMpnJHRWP/view?usp=sharing";
-  process.env.LOGO_LINK
+  const baseUrl = process.env.LOGO_LINK
 
   
   export const RentnSignUpEmail = ({
