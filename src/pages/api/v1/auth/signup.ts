@@ -3,8 +3,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { RentnDto } from "dto/rentn.dto";
 import { findRentn } from "lib/check.db";
 import { prisma } from "config/prisma.connect";
-import hashPassword from "lib/hash.password.helper";
+import hashString from "lib/hash.password.helper";
 import { ApiResponseDto } from "dto/apiResponseDto";
+import { Resend } from "resend";
+import RentnSignUpEmail from '../../../../../emails/templates/signUp';
+import OtpGenerator from "lib/genOtp";
 
 export default async function handler (
     req: NextApiRequest,
@@ -20,15 +23,33 @@ export default async function handler (
         })
     }
 
+    const {otp, secret} = await OtpGenerator();
+
+    
     const newUser: RentnDto = req.body;
+    const resend = new Resend(process.env.RESEND_RENTN_API_KEY)
     try {
         if (await findRentn(newUser.email)){
             const createNewUser = await prisma.rentn.create({
                 data: {
                     email: newUser.email,
-                    password: await hashPassword(newUser.password),
+                    password: await hashString(newUser.password),
+                    secret: await hashString(secret),
+                    otp: await hashString(otp),
                 }
             })
+            // send email here
+            const emailContent = RentnSignUpEmail({
+                rentnOtp: otp,
+                email: newUser.email
+            });
+
+            await resend.sendEmail({
+                from: 'onboarding@resend.dev',
+                to: newUser.email,
+                subject: 'Rentn Email Confirmation',
+                react: emailContent,
+            });
 
             const response:ApiResponseDto<RentnDto> = {
                 statusCode: 201,
@@ -37,7 +58,7 @@ export default async function handler (
                 url: req.url,
                 message: 'you have successfully created an account, please check your email to complete profile',
             };
-            // send email here
+            
             res.status(201).send(response)
         } else {
             res.status(400).send({
