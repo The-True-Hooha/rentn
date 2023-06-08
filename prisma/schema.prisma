@@ -13,7 +13,7 @@ model Rentn {
   status    Status   @default(NOT_VERIFIED)
   password  String
   createdAt DateTime @default(now()) @db.Timestamptz()
-  profile   Profile? @relation(fields: [rentnId], references: [profileId])
+  profile   Profile?
   otp       String
   secret    String
 
@@ -25,7 +25,7 @@ model Profile {
   firstName     String
   lastName      String
   phoneNumber   String
-  rentn         Rentn?
+  rentn         Rentn?        @relation(fields: [profileId], references: [rentnId])
   address       String
   gender        GENDER
   role          ROLE
