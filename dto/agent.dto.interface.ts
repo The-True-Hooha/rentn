@@ -5,7 +5,6 @@ export interface CreateAgentDto {
     email: string;
     password: string;
 }
-
 export interface Agents{
     email: string;
 }
@@ -24,7 +23,7 @@ export interface UpdateAgentDto {
 }
 
 export interface ApartmentDto {
-    address: 'string';
+    address: string;
     community: string;
     apartmentType: string;
     price: any;
