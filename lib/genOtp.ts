@@ -10,6 +10,5 @@ export default async function OtpGenerator(): Promise<{otp: string, secret: stri
         time: 7200, // OTP expires in 2 hours
 
     });
-
     return {otp: genOtp, secret: secret};
 }
