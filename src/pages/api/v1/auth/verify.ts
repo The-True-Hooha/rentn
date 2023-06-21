@@ -34,29 +34,35 @@ export default async function handler (
                 message: 'sorry this email does not exist',
             })
         }
+        console.log(user.otp, user.secret);
 
         console.log(rentnUser.otp);
-        const verifyOtp = speakeasy.totp.verify({
+        const verifyOtp = speakeasy.time.verify({
             secret: user.secret,
             encoding: 'base32',
-            token: user.otp,
+            algorithm: 'sha256',
+            token: rentnUser.otp,
+            step: 600,
             digits: 6,
-            window: 2,
-            time: 7200
+            window: 1,
         })
+        console.log(verifyOtp, "otp verification")
         if (verifyOtp) {
             await prisma.rentn.update({
                 where: {
                     email: rentnUser.email,
                 },
                 data: {
-                    status: 'VERIFIED'
+                    status: 'VERIFIED',
                 },
             });
             // res.redirect('/login') redirect the user to the login page
+            return res.status(200).send({
+                message: 'OTP verified successfully.',
+              });
         } else {
             return res.status(400).send({
-                message: 'sorry, otp invalid is or has expired',
+                message: 'sorry, otp invalid or has expired',
             })
         }
 
