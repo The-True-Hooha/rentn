@@ -38,18 +38,17 @@ export default async function handler (
                 }
             })
 
-            // send email here
             const emailContent = RentnSignUpEmail({
                 rentnOtp: otp,
                 email: newUser.email
             });
 
-            // await resend.sendEmail({
-            //     from: 'onboarding@resend.dev',
-            //     to: newUser.email,
-            //     subject: 'Rentn Email Confirmation',
-            //     react: emailContent,
-            // });
+            await resend.sendEmail({
+                from: 'onboarding@resend.dev',
+                to: newUser.email,
+                subject: 'Rentn Email Confirmation',
+                react: emailContent,
+            });
 
             const response:ApiResponseDto<RentnDto> = {
                 statusCode: 201,
@@ -68,12 +67,12 @@ export default async function handler (
         }
 
     } catch (error: any) {
+        console.log(error)
         if (error.code == 'P2002' && error.meta?.target?.includes('email')) {
             return res.status(404).json({
                 message: 'oops, this email already exist',
             })
         }
-        console.log('agent signup error::', error)
         return res.status(500).send({
             message: 'sever is currently unavailable',
             data: error.message
