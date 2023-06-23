@@ -22,7 +22,8 @@ export async function findRentn(email: string): Promise<any> {
         email: email
       },
       select: {
-        email: true
+        email: true,
+        password: true,
       },
     })
     
