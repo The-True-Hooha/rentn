@@ -228,7 +228,6 @@ export function priceSchemaValidation(data: {}){
 
 // TODO: fix eslint for lints
 
-
 export function rentnSchemaValidator(data: {}) {
     
     const signUpValidation = zod.object({
@@ -244,7 +243,7 @@ export function rentnSchemaValidator(data: {}) {
             .min(8, { message: 'Password must be at least 8 characters long' })
             .max(16, 'password is too long')
             .nonempty('password must be set by the user')
-            .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/, 'password must contain uppercase, lowercase, digit, and special character')
+            .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!.@#$%^&*]).{8,}$/, 'password must contain uppercase, lowercase, digit, and special character')
             .trim(),
     })
 
@@ -280,4 +279,26 @@ export function OtpZodError(data: {}) {
 
     }
 
+}
+
+export function RentnLoginValidationBody(data: any) {
+    const loginValidator = zod.object({
+        email: zod
+            .string()
+            .nonempty({message: 'email is required to login'})
+            .email()
+            .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'please use a valid email address'),
+        password: zod
+            .string()
+            .min(1, "Password must be 8 or more characters")
+            .max(16, "Password is too long")
+            .nonempty({message: 'password is required to login'})
+            .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/, 'password must contain uppercase, lowercase, digit, and special character')
+            .trim(),
+    })
+    try {
+        loginValidator.parse(data)
+    } catch (err: any) {
+        return fromZodError(err).message
+    }
 }
