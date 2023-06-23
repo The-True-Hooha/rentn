@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Rentn" ALTER COLUMN "role" DROP NOT NULL,
+ALTER COLUMN "role" SET DEFAULT 'User';

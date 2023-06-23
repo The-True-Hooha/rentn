@@ -26,18 +26,37 @@ model Profile {
   lastName      String
   phoneNumber   String
   rentn         Rentn?        @relation(fields: [profileId], references: [rentnId])
-  address       String
   gender        GENDER
+  agent         Agent?
+  admin Admin?
+  user Users?
   role          ROLE
-  status        Status
   createdAt     DateTime      @default(now()) @db.Timestamptz()
   updatedAt     DateTime      @updatedAt @db.Timestamptz()
   profileStatus ProfileStatus @default(ACTIVE)
-  Apartment     Apartment[]
 
   @@index([profileId])
 }
 
+model Agent {
+  agentId    String     @id @default(uuid())
+  profile    Profile    @relation(fields: [agentId], references: [profileId])
+  apartments Apartment?
+  createdAt  DateTime   @default(now()) @db.Timestamptz()
+  updatedAt  DateTime   @updatedAt @db.Timestamptz()
+}
+
+model Users {
+  userId String @id @default(uuid())
+  profile Profile @relation(fields: [userId], references: [profileId])
+  createdAt  DateTime   @default(now()) @db.Timestamptz()
+  updatedAt  DateTime   @updatedAt @db.Timestamptz()
+}
+
+model Admin {
+  adminId String @id @default(uuid())
+  profile Profile @relation(fields: [adminId], references: [profileId])
+}
 enum GENDER {
   Male
   Female
@@ -55,7 +74,7 @@ model Price {
   tenure        Int       @default(1)
   updatedAt     DateTime  @updatedAt @db.Timestamptz()
   apartment     Apartment @relation(fields: [apartmentId, apartmentType], references: [apartmentId, apartmentType], onUpdate: Cascade)
-  apartmentId   String    @unique
+  apartmentId   String
   apartmentType String
 
   @@unique([apartmentId, apartmentType])
@@ -64,6 +83,7 @@ model Price {
 
 model Apartment {
   apartmentId   String   @id @default(uuid())
+  agentId       String   @default(uuid())
   name          String   @db.VarChar(50)
   description   String   @db.VarChar(5000)
   address       String   @db.VarChar(200)
@@ -71,11 +91,11 @@ model Apartment {
   createdAt     DateTime @default(now()) @db.Timestamptz()
   apartmentType String
   features      String[]
+  agent         Agent    @relation(fields: [apartmentId], references: [agentId])
   updatedAt     DateTime @updatedAt @db.Timestamptz()
   price         Price? // working with this for not required yet, if it fails I'll change it to required or a better solution
   images        String[]
-  profile       Profile  @relation(fields: [profileId], references: [profileId])
-  profileId     String
+  profileId     String   @unique
 
   @@unique([apartmentId, apartmentType])
   @@index([apartmentId])
@@ -96,3 +116,4 @@ enum ProfileStatus {
 }
 
 // run migration with npx prisma migrate dev --name init
+// npx prisma format
