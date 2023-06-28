@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/montserrat": "^5.0.3",
     "@next/font": "13.2.4",
     "@prisma/client": "^4.15.0",
     "@react-email/components": "^0.0.6",
