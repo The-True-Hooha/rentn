@@ -7,11 +7,11 @@ type Props = {
     handleSubmit: () => void;
     onChange: React.ChangeEventHandler<HTMLInputElement>
 }
-const SignUp = ({ form, handleSubmit, onChange }: Props) => {
+const SignUp = ({ form, handleSubmit, onChange, setForm }: Props) => {
 
     return (
-        <div className='w-full flex justify-center px-2'>
-            <form className='relative h-screen max-w-xl w-full mt-8 flex flex-col gap-5'
+        <div className='relative w-full sm:flex sm:justify-center'>
+            <form className='relative max-w-xl w-full h-[70vh] flex flex-col gap-2 px-2'
                 onSubmit={handleSubmit}>
                 <>
                     <label htmlFor='email' className='text-xs font-semibold'>FIRST NAME</label>
@@ -66,7 +66,7 @@ const SignUp = ({ form, handleSubmit, onChange }: Props) => {
                         onChange={onChange}
                     />
                 </>
-                <div className='flex absolute left-0 bottom-32 mt-8 max-w-xl w-full justify-center border-none'>
+                <div className=' flex mt-8 max-w-xl w-full justify-center border-none sm:absolute sm:left-0 sm:bottom-10'>
                     <input
                         className='cursor-pointer max-w-xl w-[70%] p-3 bg-black text-white border-none rounded-md '
                         type='submit'
@@ -74,6 +74,16 @@ const SignUp = ({ form, handleSubmit, onChange }: Props) => {
                     />
 
                 </div>
+                <div className='sm:hidden w-full flex justify-center text-xs'>Already have an account ?
+                    <span
+                        className='ml-1 text-gray-700 underline cursor-pointer'
+                        onClick={() =>
+                            setForm((prev) => ({
+                                ...prev,
+                                isNewUser: false,
+                            }))
+                        }
+                    >{!form.isNewUser ? 'Sign up' : 'Login'}</span></div>
             </form>
         </div>
     )

@@ -28,9 +28,9 @@ const Authentication: React.FC<Props> = () => {
 
 
     return (
-        <section className='w-full h-screen overflow-hidden sm:flex'>
+        <section className='w-full sm:flex sm:h-[90vh] overflow-hidden'>
             {/* first half of the page */}
-            <div className='relative hidden sm:flex sm:flex-col sm:w-[45%] sm:gap-10 sm:h-screen bg-black text-white '>
+            <div className='relative hidden sm:flex sm:flex-col sm:w-[45%] sm:gap-10 bg-black text-white '>
                 <div className='flex justify-center items-center w-full h-8'>
                     <h1 className='text-lg font-semibold'>rent'n</h1>
                 </div>
@@ -44,10 +44,12 @@ const Authentication: React.FC<Props> = () => {
                 </div>
             </div>
 
-            {/* form section */}
             <div className='flex w-full sm:w-[55%] justify-center items-center'>
-                <section className='w-full h-screen '>
-                    <div className='w-full flex justify-center text-xs'>
+                <section className='w-full'>
+
+                    {/* heading for large screens */}
+
+                    <div className='hidden sm:w-full sm:flex sm:justify-center text-xs'>
                         <div className='my-4   '>
                             <span
                                 className={`transition-all text-xs cursor-pointer ${!form.isNewUser ? 'text-sm font-bold underline' : ''}`}
@@ -71,6 +73,12 @@ const Authentication: React.FC<Props> = () => {
                         </div>
                     </div>
 
+                    {/* heading for mobile devices */}
+                    <div className='sm:hidden w-full flex justify-center items-center h-8 text-lg font-bold my-2'>
+                        {form.isNewUser ? 'Sign Up' : 'Log in'}
+                    </div>
+
+                    {/* form section */}
                     {form.isNewUser && (
                         <SignUp
                             form={form}
@@ -85,9 +93,9 @@ const Authentication: React.FC<Props> = () => {
                             handleSubmit={handleSubmit}
                             onChange={onChange} />
                     )}
+
                 </section>
             </div>
-
         </section>
     )
 };
