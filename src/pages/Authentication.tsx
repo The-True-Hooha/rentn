@@ -28,7 +28,7 @@ const Authentication: React.FC<Props> = () => {
 
 
     return (
-        <section className='w-full sm:flex sm:h-[90vh] overflow-hidden'>
+        <section className='w-full h-full sm:flex overflow-hidden'>
             {/* first half of the page */}
             <div className='relative hidden sm:flex sm:flex-col sm:w-[45%] sm:gap-10 bg-black text-white '>
                 <div className='flex justify-center items-center w-full h-8'>
@@ -36,11 +36,11 @@ const Authentication: React.FC<Props> = () => {
                 </div>
                 <p className='px-5 sm:text-lg'>Sign up as a house owner and upload houses for rent</p>
 
-                <div className='absolute w-full left-0 bottom-0'>
-                    <img className='' src='/sun 1.svg' />
+                <div className='relative flex flex-1 w-full '>
+                    {/* <img className='absolute top-10 left-0 z-[-1]' src='/sun 1.svg' />
                     <div className='relative w-full'>
                         <img className='absolute left-0 bottom-0 z-10 w-full bg-white' src='/footer-image.svg' />
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
