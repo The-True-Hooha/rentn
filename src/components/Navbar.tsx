@@ -8,11 +8,11 @@ const Navbar = () => {
             <Link
                 href='/'
                 className='font-bold text-xl'>rent'n</Link>
-            <div className='flex justify-between gap-4'>
+            <div className='flex justify-between gap-4 '>
                 <Link
                     href=""
                     onClick={() => setSelect('rent')}
-                    className={`text-sm ${select === 'rent' ? 'underline font-semibold ' : ''}`}
+                    className={`text-sm  ${select === 'rent' ? 'underline font-semibold ' : ''}`}
                 >Rent a house</Link>
                 <Link
                     href=""

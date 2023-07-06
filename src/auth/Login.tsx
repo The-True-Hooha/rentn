@@ -14,12 +14,12 @@ const Login = ({ form, handleSubmit, onChange, setForm }: Props) => {
         <div className='w-full px-2 sm:flex sm:justify-center'>
             <form className='relative w-full h-[70vh] max-w-xl flex flex-col gap-5'
                 onSubmit={handleSubmit}>
-                <label htmlFor='password' className='text-xs font-semibold'>PHONE NUMBER</label>
+                <label htmlFor='password' className='text-xs font-semibold'>EMAIL ADDRESS</label>
                 <input
                     className='max-w-xl h-8 p-1 text-xs border-b border-b-black placeholder:text-xs placeholder:ml-1 focus:outline-none'
                     type='email'
                     name='email'
-                    placeholder='Enter Your Phone number'
+                    placeholder='Enter your email address'
                     required
                     value={form.email}
                     onChange={onChange}
@@ -29,7 +29,7 @@ const Login = ({ form, handleSubmit, onChange, setForm }: Props) => {
                     className='max-w-xl h-8 p-1 text-xs border-b border-b-black placeholder:text-xs placeholder:ml-1 focus:outline-none'
                     type='password'
                     name='password'
-                    placeholder='Enter Your Password'
+                    placeholder='Enter your password'
                     required
                     value={form.password}
                     onChange={onChange}

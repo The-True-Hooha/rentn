@@ -6,9 +6,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
     const excludeFooter = router.pathname === '/Authentication'; // Specify the route where you want to exclude the footer
     return (
-        <section className="flex flex-col min-h-screen h-screen overflow-none">
+        <section className="flex flex-col min-h-screen h-screen overflow-none font-montserrat">
             <Navbar />
-            <main className='flex flex-1 justify-center items-center' >
+            <main className='flex flex-1 justify-center' >
                 {children}
             </main>
             {!excludeFooter && <Footer />}

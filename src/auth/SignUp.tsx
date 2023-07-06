@@ -10,11 +10,11 @@ type Props = {
 const SignUp = ({ form, handleSubmit, onChange, setForm }: Props) => {
 
     return (
-        <div className='relative w-full sm:flex sm:justify-center'>
-            <form className='relative max-w-xl w-full h-[70vh] flex flex-col gap-2 px-2'
+        <div className='relative px-2 w-full sm:flex sm:justify-center'>
+            <form className='relative w-full h-[70vh] max-w-xl flex flex-col gap-5'
                 onSubmit={handleSubmit}>
                 <>
-                    <label htmlFor='email' className='text-xs font-semibold'>FIRST NAME</label>
+                    {/* <label htmlFor='email' className='text-xs font-semibold'>FIRST NAME</label>
                     <input
                         className='max-w-xl h-8 p-1 text-xs border-b border-b-black placeholder:text-xs placeholder:ml-1 focus:outline-none'
                         type='text'
@@ -44,23 +44,23 @@ const SignUp = ({ form, handleSubmit, onChange, setForm }: Props) => {
                         required
                         value={form.phoneNo}
                         onChange={onChange}
-                    />
+                    /> */}
                     <label htmlFor='password' className='text-xs font-semibold'>EMAIL ADDRESS</label>
                     <input
-                        className='max-w-xl h-8 p-1 text-xs border-b border-b-black  placeholder:text-xs placeholder:ml-1 focus:outline-none'
+                        className='max-w-xl h-8 p-1 text-xs border-b border-b-black placeholder:text-xs placeholder:ml-1 focus:outline-none'
                         type='email'
                         name='email'
-                        placeholder='Enter Your email address'
+                        placeholder='Enter your email address'
                         required
                         value={form.email}
                         onChange={onChange}
                     />
-                    <label htmlFor='password' className='text-xs font-semibold' >PASSWORD</label>
+                    <label htmlFor='password' className='text-xs font-semibold'>PASSWORD</label>
                     <input
-                        className='max-w-xl h-8 p-1 text-xs border-b border-b-black  placeholder:text-xs placeholder:ml-1 focus:outline-none '
+                        className='max-w-xl h-8 p-1 text-xs border-b border-b-black placeholder:text-xs placeholder:ml-1 focus:outline-none'
                         type='password'
                         name='password'
-                        placeholder='Enter Your password'
+                        placeholder='Enter your password'
                         required
                         value={form.password}
                         onChange={onChange}
