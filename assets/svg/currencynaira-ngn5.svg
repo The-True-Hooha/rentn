@@ -1,0 +1,21 @@
+<svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_272_3416)">
+<rect opacity="0.2" x="4.05" y="4.55" width="15.9" height="15.9" stroke="#FF35D3" stroke-width="0.1"/>
+<rect opacity="0.2" x="7.05" y="7.55" width="9.9" height="9.9" stroke="#FF35D3" stroke-width="0.1"/>
+<rect opacity="0.2" x="6.05" y="3.55" width="11.9" height="17.9" stroke="#FF35D3" stroke-width="0.1"/>
+<rect opacity="0.2" x="20.95" y="6.55" width="11.9" height="17.9" transform="rotate(90 20.95 6.55)" stroke="#FF35D3" stroke-width="0.1"/>
+<circle opacity="0.2" cx="12" cy="12.5" r="9.95" stroke="#FF35D3" stroke-width="0.1"/>
+<circle opacity="0.2" cx="12" cy="12.5" r="2.95" stroke="#FF35D3" stroke-width="0.1"/>
+<circle opacity="0.2" cx="12" cy="12.5" r="6.95" stroke="#FF35D3" stroke-width="0.1"/>
+<line opacity="0.2" x1="4.03536" y1="4.46464" x2="20.0354" y2="20.4646" stroke="#FF35D3" stroke-width="0.1"/>
+<line opacity="0.2" x1="0.686523" y1="12.45" x2="23.3139" y2="12.45" stroke="#FF35D3" stroke-width="0.1"/>
+<line opacity="0.2" x1="20.0354" y1="4.53536" x2="4.03535" y2="20.5354" stroke="#FF35D3" stroke-width="0.1"/>
+<line opacity="0.2" x1="12.05" y1="1.18628" x2="12.05" y2="23.8137" stroke="#FF35D3" stroke-width="0.1"/>
+<path d="M6.77083 21.3333V6.22916H7.29167L17.7083 19.7708H18.2292V4.66666M3.125 10.3958H21.875M3.125 15.6042H21.875" stroke="#1E1E1E" stroke-width="3"/>
+</g>
+<defs>
+<clipPath id="clip0_272_3416">
+<rect width="25" height="25" fill="white" transform="translate(0 0.5)"/>
+</clipPath>
+</defs>
+</svg>
